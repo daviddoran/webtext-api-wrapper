@@ -64,6 +64,10 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	/**
 	 * getBalance method.
 	 * 
+	 * Calling Webtext API with api_id and api_pwd and no other params will return: BAL: 12345.00
+	 * getBalance() will explode the string from the API response at ':' and return the second key 
+	 * containing the float value for the current credit balance
+	 * 
 	 * @access public
 	 * @return array
 	 */
@@ -123,13 +127,15 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		
 		$data['params']['dest']	= $dest;
 		
-		if ( $txt != null )
+		if ( $txt == null )
+			$unicode = 1;
+		else
 			$data['params']['txt']	= $txt;
-		
-		$data['params']['unicode'] = $unicode;
 		
 		if ( $unicode == 1)
 		{
+			$data['params']['unicode'] = $unicode;
+			
 			if ( $hex != null)
 				$data['params']['hex'] = $this->createUtf16Hex($hex);
 		}
@@ -149,15 +155,12 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		
 		if ( isset($options['delivery_delta']) && $options['delivery_delta'] != null )
 		{
-			settype($options['delivery_delta'], 'integer');
-			$data['params']['delivery_delta'] = $options['delivery_delta'];
+			$data['params']['delivery_delta'] = (int) $options['delivery_delta'];
 		}
 		
 		if ( isset($options['receipt']) && $options['receipt'] != null )
-		{
-			settype($options['receipt'], 'integer');
-			
-			$data['params']['receipt'] = $options['receipt'];
+		{			
+			$data['params']['receipt'] = (int) $options['receipt'];
 			
 			if ( $options['receipt'] == 1 )
 			{
@@ -293,7 +296,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	{
 		if ( !$action ) return false;
 		
-		if ( !isset( $options['headers'] ) ) $options['headers'] = array();
+		if ( !isset($options['headers']) ) $options['headers'] = array();
 		
 		// Setup Headers
 		$options['headers'][] = 'User-Agent: Webtext Wrapper URL Handler 1.0';
@@ -305,7 +308,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		$postdata	= "api_id={$this->_api_id}&api_pwd={$this->_api_pwd}";
 		
 		// Assign parameters
-		if ( isset( $options['params'] ) )
+		if ( isset($options['params']) )
 		{
 			foreach ( $options['params'] as $k => $v )
 				$postdata .= '&' . $k . '=' . urlencode( $v );
@@ -328,24 +331,23 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 
 			if ( $this->method != 'GET' )
 			{
-				curl_setopt( $ch, CURLOPT_POST, 1 );
-				curl_setopt( $ch, CURLOPT_POSTFIELDS, $postdata );
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 			}
 			
-			curl_setopt( $ch, CURLOPT_URL, $url );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, $options['headers'] );
-			curl_setopt( $ch, CURLOPT_HEADER, $this->_show_response_headers );
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $options['headers']);
+			curl_setopt($ch, CURLOPT_HEADER, $this->_show_response_headers);
 
-			$res = curl_exec( $ch );
-			curl_close( $ch );
+			$res = curl_exec($ch);
+			curl_close($ch);
 			
 			return $res;
 		}
 		else
 		{
-			throw new Webtext_Exception('cURL functions do not exist.');
-			return false;		
+			throw new Webtext_Exception( 'cURL functions do not exist.' );		
 		}
 	}
 	

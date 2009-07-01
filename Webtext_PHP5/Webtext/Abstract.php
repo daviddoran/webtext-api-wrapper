@@ -6,7 +6,7 @@
  */
 
 /**
- * Webtext class.
+ * Webtext Abstract class.
  * 
  * @author Eoghan O'Brien <eoghan@eoghanobrien.com> (www.eoghanobrien.com)
  * @package Webtext
@@ -193,7 +193,7 @@ abstract class Webtext_Abstract
 	 */
 	public function checkCurlExists()
 	{
-		if ( function_exists('curl_init') && function_exists('curl_setopt') )
+		if ( function_exists('curl_init') && function_exists('curl_setopt') && function_exists('curl_close') )
 		{
 			return true;
 		}
