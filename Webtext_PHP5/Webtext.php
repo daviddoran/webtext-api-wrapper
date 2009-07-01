@@ -33,7 +33,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @var boolean $_curl_exists (default value: true)
 	 * @access private
 	 */
-	private $_curl_exists	= true;
+	private $_curl_exists	= false;
 	
 	/**
 	 * @var mixed $_show_response_headers (default value: 0)
@@ -55,10 +55,10 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		$this->_api_pwd = $api_pwd;
 		$this->_response_codes = $this->setResponseCodes();
 		
-		if ( !empty($url) ) $this->setUrl($url);
-		if ( !empty($method) ) $this->setMethod($method);
+		if ( !empty($url) )		$this->setUrl($url);
+		if ( !empty($method) )	$this->setMethod($method);
 		
-		$this->_curl_exists = function_exists('curl_init') && function_exists('curl_setopt');
+		$this->_curl_exists = $this->checkCurlExists();
 	}
 	
 	/**
@@ -301,7 +301,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		// Setup URL
 		$url 		= $this->url . $action . '.html';
 		
-		// Setup request data
+		// Setup mandatory request data
 		$postdata	= "api_id={$this->_api_id}&api_pwd={$this->_api_pwd}";
 		
 		// Assign parameters
@@ -344,7 +344,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		}
 		else
 		{
-			trigger_error('cURL does not exist', E_USER_ERROR);
+			throw new Webtext_Exception('cURL functions do not exist.');
 			return false;		
 		}
 	}

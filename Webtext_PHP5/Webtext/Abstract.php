@@ -79,7 +79,8 @@ abstract class Webtext_Abstract
 	 */
 	public function setMethod($method)
 	{
-		$this->method = $method;
+		if ( !empty($method) )
+			$this->method = $method;
 	}
 	
 	/**
@@ -103,7 +104,8 @@ abstract class Webtext_Abstract
 	 */
 	public function setUrl($url)
 	{
-		$this->url = $url;
+		if ( !empty($url) )
+			$this->url = $url;
 	}
 	
 	/**
@@ -184,6 +186,21 @@ abstract class Webtext_Abstract
 	}
 	
 	/**
+	 * checkCurlExists method.
+	 * 
+	 * @access public
+	 * @return boolean
+	 */
+	public function checkCurlExists()
+	{
+		if ( function_exists('curl_init') && function_exists('curl_setopt') )
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * _createUtf16Hex function.
 	 * 
 	 * @access protected
@@ -193,11 +210,9 @@ abstract class Webtext_Abstract
 	protected function createUtf16Hex($utf8)
 	{
 		$utf16	= iconv('UTF-8','UTF-16BE', $utf8); 
-		$tmp	= unpack('H*hex', $utf16); 
-		$hex	= "{$tmp['hex']}"; 
-		return $hex;
+		$tmp	= unpack('H*hex', $utf16);
+		return "{$tmp['hex']}";
 	}
 }
-
 
 ?>

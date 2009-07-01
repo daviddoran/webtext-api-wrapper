@@ -6,7 +6,7 @@
  */
 
 /**
- * Webtext class.
+ * Webtext Interface.
  * 
  * @author Eoghan O'Brien <eoghan@eoghanobrien.com> (www.eoghanobrien.com)
  * @package Webtext
