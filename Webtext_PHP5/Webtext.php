@@ -352,5 +352,3 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	}
 	
 }
-
-?>

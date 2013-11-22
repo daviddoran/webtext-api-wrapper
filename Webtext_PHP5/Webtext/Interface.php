@@ -32,5 +32,3 @@ interface Webtext_Interface
 	public function removeContactGroup($group_alias);
 	
 }
-
-?>

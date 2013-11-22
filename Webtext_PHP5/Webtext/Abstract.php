@@ -214,5 +214,3 @@ abstract class Webtext_Abstract
 		return "{$tmp['hex']}";
 	}
 }
-
-?>

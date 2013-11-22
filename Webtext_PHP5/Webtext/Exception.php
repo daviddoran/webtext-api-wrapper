@@ -19,5 +19,3 @@ class Webtext_Exception
 {
 		
 }
-
-?>
