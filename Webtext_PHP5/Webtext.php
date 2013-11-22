@@ -323,7 +323,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		if ( $this->method == 'GET' )
 		{
 			$url .= '?' . $postdata;
-			unset($postdata);
+			$postdata = null;
 		}
 		else
 		{
