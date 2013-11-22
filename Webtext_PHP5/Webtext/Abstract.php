@@ -148,7 +148,7 @@ abstract class Webtext_Abstract
 			'115'	=> 'Missing parameter: remove_num',
 			'199'	=> 'Insufficient Credit',
 			'201'	=> 'Authentication Failure',
-			'202'	=> 'IP Restriction Ð If IP restrictions are in place for this account, an attempt has been made to send from an unauthorised IP address.',
+			'202'	=> 'IP Restriction - If IP restrictions are in place for this account, an attempt has been made to send from an unauthorised IP address.',
 			'203'	=> 'Invalid value for parameter: dest',
 			'204'	=> 'Invalid value for parameter: api_pwd',
 			'205'	=> 'Invalid value for parameter: api_id',
