@@ -5,6 +5,10 @@
  * @package Webtext
  */
 
+require_once __DIR__ . '/Webtext/Exception.php';
+require_once __DIR__ . '/Webtext/Interface.php';
+require_once __DIR__ . '/Webtext/Abstract.php';
+
 /**
  * Webtext class.
  * 
