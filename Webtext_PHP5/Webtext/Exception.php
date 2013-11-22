@@ -15,7 +15,7 @@
  * @see http://eoghanobrien.com/code/webtext-php/
  */
 
-class Webtext_Exception
+class Webtext_Exception extends Exception
 {
 		
 }
