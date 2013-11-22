@@ -338,7 +338,7 @@ class Webtext
 		if ( $this->method == 'GET' )
 		{
 			$url .= '?' . $postdata;
-			unset($postdata);
+            $postdata = null;
 		}
 		else
 		{
