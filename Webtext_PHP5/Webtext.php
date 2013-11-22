@@ -43,13 +43,13 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	
 	/**
 	 * Constructor method.
-	 * 
-	 * @access private
-	 * @param mixed $api_key
+	 *
+	 * @param mixed $api_id
 	 * @param mixed $api_pwd
-	 * @return void
+     * @param string $url
+     * @param string $method
 	 */
-	function __construct($api_id, $api_pwd, $url = '', $method = '')
+    function __construct($api_id, $api_pwd, $url = '', $method = '')
 	{
 		$this->_api_id = $api_id;
 		$this->_api_pwd = $api_pwd;
@@ -85,7 +85,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @param mixed $dest
 	 * @param mixed $txt
 	 * @param array $options. (default: array()
-	 * @return void
+	 * @return string|false
 	 */
 	public function sendMessage($dest, $txt, $options = array())
 	{
@@ -100,7 +100,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @param mixed $dest
 	 * @param mixed $hex
 	 * @param array $options. (default: array()
-	 * @return void
+	 * @return string|false
 	 */
 	public function sendUnicodeMessage($dest, $hex, $options =  array())
 	{
@@ -117,7 +117,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @param integer $unicode. (default: 0)
 	 * @param mixed $hex. (default: null)
 	 * @param array $options. (default: array()
-	 * @return void
+	 * @return string|false
 	 */
 	protected function sendText($dest, $txt = null, $unicode = 0, $hex = null, $options = array())
 	{
@@ -202,7 +202,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @param mixed $contact_num
 	 * @param mixed $contact_name
 	 * @param mixed $group_alias. (default: null)
-	 * @return string
+	 * @return string|false
 	 */
 	public function addContact($contact_num, $contact_name = null, $group_alias = null)
 	{
@@ -232,7 +232,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * @access public
 	 * @param mixed $remove_num
 	 * @param mixed $group_alias. (default: null)
-	 * @return void
+	 * @return string|false
 	 */
 	public function removeContact($remove_num, $group_alias = null)
 	{
@@ -254,7 +254,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * 
 	 * @access public
 	 * @param mixed $group_name
-	 * @return void
+	 * @return string|false
 	 */
 	public function addContactGroup($group_name)
 	{
@@ -273,7 +273,7 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 	 * 
 	 * @access public
 	 * @param mixed $group_alias
-	 * @return void
+	 * @return string|false
 	 */
 	public function removeContactGroup($group_alias)
 	{
@@ -284,13 +284,14 @@ class Webtext extends Webtext_Abstract implements Webtext_Interface
 		return $this->makeRequest('remove_contact_group', $data);
 	}
 	
-/**
+    /**
 	 * makeRequest function.
 	 * 
 	 * @access protected
 	 * @param mixed $action
 	 * @param mixed $options. (default: array()
-	 * @return void
+	 * @return string|false
+     * @throws Webtext_Exception
 	 */
 	protected function makeRequest($action, $options = array())
 	{
